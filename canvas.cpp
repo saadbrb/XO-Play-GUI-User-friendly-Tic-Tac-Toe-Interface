@@ -1,6 +1,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QColor>
+#include <QFrame>
 #include "canvas.h"
 #include "line.h"
 
@@ -10,7 +11,8 @@ Canvas::Canvas(QWidget *parent)
     dragging = false;
     objkt =nullptr;
 
-
+    laenge = this->height();
+    breite = this->width();
 }
 QSize Canvas::minimumSizeHint() const
 {
@@ -23,12 +25,6 @@ QSize Canvas::sizeHint() const
 }
 
 
-
-
-
-
-
-
 void Canvas::paintEvent(QPaintEvent *event) {
 
 
@@ -38,9 +34,16 @@ void Canvas::paintEvent(QPaintEvent *event) {
     painter.setPen(Qt::black);
     painter.fillRect(QRectF(0,0, width() -1, height() -1), Qt::white);
     painter.drawRect(QRectF(0,0, width() -1, height() -1));
-    gridMallen();
+    if( laenge != this->height() || breite != this->width()){
+        gridMallen();
+        laenge = this->height();
+        breite = this->width();
+    }
+
+
     gridScene.paintAllObjects(&painter);
 
+    update();
 
 
 }
@@ -71,30 +74,19 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
 }
 void Canvas::gridMallen(){
     gridScene.removeAllObjects();
-    int cellX = this->width()/3;
-    int cellY = this->height()/3;
-    for(int x=0; x<this->height(); x+=cellX){
-        for(int y=0; y<this->width(); y+=cellY){
-
-
-            QPointF firstPunkt;
-            QPointF lastPunkt;
-            //Zeilen Zeichnen
-            firstPunkt.rx() = x;
-            firstPunkt.ry() = 0;
-            lastPunkt.rx() = x;
-            lastPunkt.ry() = this->height();
-            objkt = new Line(firstPunkt, lastPunkt, Qt::black);
-            gridScene.addObjkt(objkt);
-            //Spalten Zeichnen
-            firstPunkt.rx() = 0;
-            firstPunkt.ry() = y;
-            lastPunkt.rx() = this->width();
-            lastPunkt.ry() = y;
-            objkt = new Line(firstPunkt, lastPunkt, Qt::black);
-            gridScene.addObjkt(objkt);
-
-        }
+    int cellSizeX = width() / 3;
+    int cellSizeY = height() / 3;
+    for(int i = 1; i < 3; ++i){
+        double x = i * width() / 3;
+        QPointF firstPunkt(x, 0.0);
+        QPointF lastPunkt(x, height());
+        gridScene.addObjkt(new Line(firstPunkt, lastPunkt, Qt::black));
+    }
+    for (int i = 1; i < 3; ++i){
+        double y = i * height() / 3;
+        QPointF firstPunkt(0.0, y);
+        QPointF lastPunkt(width(), y);
+        gridScene.addObjkt(new Line(firstPunkt, lastPunkt, Qt::black));
     }
 
 }

@@ -26,6 +26,7 @@ private:
     Scene gridScene;
     Scene playScene;
     GraphObjkt* objkt;
+    int laenge, breite;
 
 };
 

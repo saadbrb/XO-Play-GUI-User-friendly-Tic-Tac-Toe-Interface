@@ -7,7 +7,7 @@ Paint::Paint(QWidget *parent)
 {
     ui->setupUi(this);
     canvas = new Canvas();
-    ui->gridLayout_2->replaceWidget(ui->frame, canvas);
+    ui->verticalLayout_3->replaceWidget(ui->frame, canvas);
     delete ui->frame;
     ui->frame = canvas;
 
