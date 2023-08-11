@@ -6,7 +6,7 @@
 #include <QPainter>
 
 
-class GraphObjkt
+class GraphikObjkt
 {
 protected:
     QPointF firstPunkt;
@@ -15,19 +15,20 @@ protected:
     bool showOutline;
     QPointF min,max;
     bool deko;
+    int painterSize;
 
 public:
 
-    GraphObjkt(QPointF firstPunkt_, QPointF lastPunkt_, QColor color_):
-        firstPunkt(firstPunkt_), lastPunkt(lastPunkt_), color(color_){}
+    GraphikObjkt(QPointF firstPunkt_, QPointF lastPunkt_, QColor color_, int painterSize_):
+        firstPunkt(firstPunkt_), lastPunkt(lastPunkt_), color(color_), painterSize(painterSize_){}
 
-    GraphObjkt(const GraphObjkt&);
-    explicit GraphObjkt(bool deko_ = false ): deko(deko_){}
+    GraphikObjkt(const GraphikObjkt&);
+    explicit GraphikObjkt(bool deko_ = false ): deko(deko_){}
 
 
     // Verbieten den Kopierkonstruktor und den Zuweisungsoperator
     // GraphObj(const GraphObj&) = delete;
-    GraphObjkt& operator=(const GraphObjkt&) = delete;
+    GraphikObjkt& operator=(const GraphikObjkt&) = delete;
     void setLastPunkt(QPointF p) {
         lastPunkt = p;
     }
@@ -50,7 +51,7 @@ public:
 
     virtual void mallen(QPainter* objkt) = 0;
 
-    virtual ~GraphObjkt() = default;
+    virtual ~GraphikObjkt() = default;
 };
 
 #endif // GRAPHIKOBJKT_H

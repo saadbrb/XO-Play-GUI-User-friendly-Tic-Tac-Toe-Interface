@@ -1,34 +1,35 @@
-#include "scene.h"
 #include <cmath>
 #include <QDebug>
-
-void Scene::addObjkt(GraphObjkt* objkt){
+#include "scene.h"
+void Scene::addObjkt(GraphikObjkt* objkt){
 
     graphikObjekten.push_back(objkt);
-    qDebug()<<"Objekt added Secessful!\n";
+    //    qDebug()<<"Objekt added Secessful!\n";
 
-    qDebug()<<"Size is: "<<graphikObjekten.size();
+    //    qDebug()<<"Size is: "<<graphikObjekten.size();
 }
 void Scene::paintAllObjects(QPainter* event){
 
-    for(int i=0; i<graphikObjekten.size(); i++){
-        graphikObjekten[i]->mallen(event);
+    if(graphikObjekten.size() > 0){
+        for(int i=0; i<graphikObjekten.size(); i++){
+            graphikObjekten[i]->mallen(event);
+        }
     }
 }
 
 
 
 void Scene::removeAllObjects(){
-//    if(graphikObjekten.size() > 0){
-//        for (GraphObjkt* object : graphikObjekten) {
-//            delete object;
-//        }
+    if(graphikObjekten.size() > 0){
+        for (GraphikObjkt* object : graphikObjekten) {
+            delete object;
+        }
         graphikObjekten.clear();
-   // }
+    }
 }
 
 
-QVector<GraphObjkt *> &Scene::getGraphObjkts() {
+QVector<GraphikObjkt *> &Scene::getGraphObjkts() {
     return graphikObjekten;
 }
 

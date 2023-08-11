@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     canvas.cpp \
     circle.cpp \
+    dialog.cpp \
     graphikobjkt.cpp \
     line.cpp \
     main.cpp \
@@ -20,12 +21,14 @@ SOURCES += \
 HEADERS += \
     canvas.h \
     circle.h \
+    dialog.h \
     graphikobjkt.h \
     line.h \
     paint.h \
     scene.h
 
 FORMS += \
+    dialog.ui \
     paint.ui
 
 # Default rules for deployment.

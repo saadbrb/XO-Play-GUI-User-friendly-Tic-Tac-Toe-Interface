@@ -5,7 +5,6 @@
 #include <iostream>
 #include <QPointF>
 #include <QPainter>
-#include <QtGlobal>
 
 
 class GraphObjkt

@@ -15,18 +15,27 @@ public:
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
     void gridMallen();
-
+    void malXIfPositionFound(QPointF);
+    void malOIfPositionFound(QPointF);
+    int getFeldX(QPointF);
+    int getFeldY(QPointF);
+    void checkPlayIfFinish();
+    void ergebnisAnzeigen(char c);
+    void neuSpiel();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+
 private:
     bool dragging;
     Scene gridScene;
     Scene playScene;
-    GraphObjkt* objkt;
     int laenge, breite;
+    QPointF firstPunkt, lastPunkt;
+    int playerCounter = 0;
+    char playFeld[3][3];
 
 };
 

@@ -3,22 +3,23 @@
 
 #include <QVector>
 #include <iostream>
+#include <QPainter>
 #include "graphikobjkt.h"
 
 class Scene
 {
 private:
-    QVector <GraphObjkt*> graphikObjekten;
+    QVector <GraphikObjkt*> graphikObjekten;
 
 public:
     Scene(){}
-    void addObjkt(GraphObjkt* objkt);
+    void addObjkt(GraphikObjkt* objkt);
     void paintAllObjects(QPainter* event);
     void removeAllObjects();
-    QVector<GraphObjkt*>& getGraphObjkts();
+    QVector<GraphikObjkt*>& getGraphObjkts();
     ~Scene(){
         if(graphikObjekten.size() > 0){
-            for (GraphObjkt* object : graphikObjekten) {
+            for (GraphikObjkt* object : graphikObjekten) {
                 delete object;
             }
             graphikObjekten.clear();
