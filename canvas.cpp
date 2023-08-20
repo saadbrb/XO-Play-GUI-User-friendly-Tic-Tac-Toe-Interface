@@ -35,7 +35,7 @@ void Canvas::neuSpiel(){
     }
     qDebug()<<"ich bin in neuSpiel ";
 
-   playScene.removeAllObjects();
+    playScene.removeAllObjects();
     playerCounter = 0;
     gridMallen();
     dragging = false;
@@ -66,7 +66,9 @@ void Canvas::ergebnisAnzeigen(char c)
         return;
     }
     secdialog.setGewinner(gewinner);
+    secdialog.on_lineEdit_2_selectionChanged();
     secdialog.setModal(true);
+    secdialog.show();
     secdialog.exec();
     qDebug()<<"type is = "<<secdialog.getType();
     if(secdialog.getType() == 0){
@@ -88,16 +90,16 @@ void Canvas::checkPlayIfFinish(){
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
             if(playFeld[i][0] == playFeld[i][1] && playFeld[i][1] == playFeld[i][2] && playFeld[i][2] != ' '){
-                 ergebnisAnzeigen(playFeld[i][0]);
+                ergebnisAnzeigen(playFeld[i][0]);
             }
             else if(playFeld[0][j] == playFeld[1][j] && playFeld[1][j] == playFeld[2][j] && playFeld[2][j] != ' '){
-                 ergebnisAnzeigen(playFeld[1][j]);
+                ergebnisAnzeigen(playFeld[1][j]);
             }
             else if(playFeld[0][0] == playFeld[1][1] && playFeld[1][1] == playFeld[2][2] && playFeld[2][2] != ' '){
-                 ergebnisAnzeigen(playFeld[0][0]);
+                ergebnisAnzeigen(playFeld[0][0]);
             }
             else if(playFeld[0][2] == playFeld[1][1] && playFeld[1][1] == playFeld[2][0] && playFeld[2][0] != ' '){
-                 ergebnisAnzeigen(playFeld[2][0]);
+                ergebnisAnzeigen(playFeld[2][0]);
             }
         }
     }
@@ -105,7 +107,7 @@ void Canvas::checkPlayIfFinish(){
 
 void Canvas::paintEvent(QPaintEvent *event) {
 
-
+    checkPlayIfFinish();
     QFrame::paintEvent(event);  // parent class draws border
 
     QPainter painter(this);
@@ -129,7 +131,7 @@ void Canvas::paintEvent(QPaintEvent *event) {
                 playerCounter++;
                 gridScene.paintAllObjects(&painter);
                 playScene.paintAllObjects(&painter);
-                checkPlayIfFinish();
+                //  checkPlayIfFinish();
 
             }
 
@@ -142,7 +144,7 @@ void Canvas::paintEvent(QPaintEvent *event) {
                 malOIfPositionFound(firstPunkt);
                 playFeld[row][col] = 'o';
                 playerCounter++;
-                checkPlayIfFinish();
+                //checkPlayIfFinish();
             }
             //Check TODO
         }
@@ -150,7 +152,8 @@ void Canvas::paintEvent(QPaintEvent *event) {
     }
     gridScene.paintAllObjects(&painter);
     playScene.paintAllObjects(&painter);
-    update();
+    painter.end();
+    //  update();
 }
 
 void Canvas::mousePressEvent(QMouseEvent *event) {
@@ -230,6 +233,7 @@ void Canvas::malOIfPositionFound(QPointF p){
     lastPunkt.rx() = firstPunkt.x() + 67;
     lastPunkt.ry() = firstPunkt.y() + 67;
     playScene.addObjkt(new Circle(firstPunkt, lastPunkt, Qt::red, 7));
+
 }
 
 void Canvas::malXIfPositionFound(QPointF p){
@@ -251,4 +255,5 @@ void Canvas::malXIfPositionFound(QPointF p){
     lastPunkt.rx() = (col*this->width())/3;
     lastPunkt.ry() = ((row+1)*this->height())/3;
     playScene.addObjkt((new Line(firstPunkt, lastPunkt,Qt::blue, 7)));
+
 }

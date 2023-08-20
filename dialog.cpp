@@ -45,7 +45,8 @@ int Dialog::getType(){
 void Dialog::on_pushButton_clicked()
 {
     type = 1;
-    QCoreApplication::quit();
+
+    hide();
 
 }
 

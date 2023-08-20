@@ -15,10 +15,10 @@ public:
     explicit Dialog(QWidget *parent = nullptr);
     void setGewinner(QString gewinner);
     int getType();
-    ~Dialog();
-
-private slots:
     void on_lineEdit_2_selectionChanged();
+    ~Dialog();
+private slots:
+
 
     void on_pushButton_2_clicked();
 
