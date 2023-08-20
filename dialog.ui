@@ -13,7 +13,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(153, 193, 241);</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>220</x>
@@ -26,17 +29,21 @@
     <item>
      <widget class="QLineEdit" name="lineEdit">
       <property name="text">
-       <string>Der Spieler :</string>
+       <string>                        Tic Tac Toe </string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_2"/>
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_3">
       <property name="text">
-       <string>hat gewonnen!</string>
+       <string>                        hat gewonnen!</string>
       </property>
      </widget>
     </item>
@@ -44,6 +51,10 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="pushButton_2">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 0, 0);
+color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Programme Beenden</string>
         </property>
@@ -51,14 +62,21 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(51, 209, 122);
+color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
-         <string>erneut Spielen</string>
+         <string>Erneut Spielen</string>
         </property>
        </widget>
       </item>
      </layout>
     </item>
    </layout>
+   <zorder>lineEdit_3</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>lineEdit_2</zorder>
   </widget>
  </widget>
  <resources/>

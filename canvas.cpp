@@ -6,6 +6,7 @@
 #include <QFrame>
 #include <QDialog>
 #include <QAction>
+
 #include "canvas.h"
 #include "line.h"
 #include "circle.h"
@@ -22,9 +23,6 @@ Canvas::Canvas(QWidget *parent)
             playFeld[i][j] = ' ';
         }
     }
-
-    ergebnisAnzeigen('x');
-
 }
 
 void Canvas::neuSpiel(){
@@ -33,13 +31,11 @@ void Canvas::neuSpiel(){
             playFeld[i][j] = ' ';
         }
     }
-    qDebug()<<"ich bin in neuSpiel ";
-
     playScene.removeAllObjects();
     playerCounter = 0;
     gridMallen();
     dragging = false;
-
+    update();
 }
 QSize Canvas::minimumSizeHint() const
 {
@@ -57,10 +53,10 @@ void Canvas::ergebnisAnzeigen(char c)
     Dialog  secdialog;
     QString gewinner;
     if(c == 'x'){
-        gewinner = "Gewinner ist X";
+        gewinner = "\tPlayer    X";
     }
     else if (c == 'o') {
-        gewinner = "Gewinner ist O";
+        gewinner = "\tPlayer    O";
     }
     else {
         return;
@@ -109,7 +105,6 @@ void Canvas::paintEvent(QPaintEvent *event) {
 
     checkPlayIfFinish();
     QFrame::paintEvent(event);  // parent class draws border
-
     QPainter painter(this);
     painter.setPen(Qt::black);
     painter.fillRect(QRectF(0,0, width() -1, height() -1), Qt::white);
@@ -121,7 +116,6 @@ void Canvas::paintEvent(QPaintEvent *event) {
     }
     // wenn playerCounter % 2 == 0 dann der Player is X ansonsten O
     if(dragging && firstPunkt == lastPunkt ){
-        qDebug()<<"Ich bin daran hier  in dragging && firstPunkt == lastPunkt";
         if(playerCounter % 2 == 0){
             int row = getFeldX(firstPunkt);
             int col = getFeldY(firstPunkt);
@@ -129,13 +123,7 @@ void Canvas::paintEvent(QPaintEvent *event) {
                 malXIfPositionFound(firstPunkt);
                 playFeld[row][col] = 'x';
                 playerCounter++;
-                gridScene.paintAllObjects(&painter);
-                playScene.paintAllObjects(&painter);
-                //  checkPlayIfFinish();
-
             }
-
-            //Check TODO
         }
         else if(playerCounter % 2 != 0){
             int row = getFeldX(firstPunkt);
@@ -144,23 +132,18 @@ void Canvas::paintEvent(QPaintEvent *event) {
                 malOIfPositionFound(firstPunkt);
                 playFeld[row][col] = 'o';
                 playerCounter++;
-                //checkPlayIfFinish();
             }
-            //Check TODO
         }
-
     }
     gridScene.paintAllObjects(&painter);
     playScene.paintAllObjects(&painter);
     painter.end();
-    //  update();
 }
 
 void Canvas::mousePressEvent(QMouseEvent *event) {
 
     if (event->button() == Qt::LeftButton) {
         dragging = true;
-        qDebug()<<"Ich bin  hier in mousePressEvent ";
         firstPunkt = event->pos();
         lastPunkt = firstPunkt;
         update();
@@ -169,7 +152,6 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
 void Canvas::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & Qt::LeftButton) && dragging) {
         lastPunkt = event->pos();
-        qDebug()<<"Ich bin  hier in mouseMoveEvent ";
         dragging = true;
         update();
     }
@@ -180,8 +162,6 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && dragging) {
         lastPunkt = event->pos();
         dragging = false;
-        qDebug()<<"Ich bin  hier in mouseReleaseEvent ";
-
         update();
     }
 

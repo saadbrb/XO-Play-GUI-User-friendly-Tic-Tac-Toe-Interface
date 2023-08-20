@@ -4,6 +4,7 @@
 #include <QVector>
 #include <iostream>
 #include <QPainter>
+
 #include "graphikobjkt.h"
 
 class Scene

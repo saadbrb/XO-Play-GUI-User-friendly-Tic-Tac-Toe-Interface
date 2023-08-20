@@ -12,6 +12,9 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    ui->lineEdit->setReadOnly(true);
+    ui->lineEdit_2->setReadOnly(true);
+    ui->lineEdit_3->setReadOnly(true);
 }
 
 Dialog::~Dialog()
@@ -26,9 +29,7 @@ void Dialog::setGewinner(QString gewinner){
 
 void Dialog::on_lineEdit_2_selectionChanged()
 {
-    //ui->get_number_punkten->setText(QString("Invalide Inpute"));
     ui->lineEdit_2->setText(QString(gewinner));
-
 }
 
 
@@ -36,7 +37,6 @@ void Dialog::on_pushButton_2_clicked()
 {
     type = 0;
     QCoreApplication::quit();
-
 }
 
 int Dialog::getType(){
@@ -45,8 +45,6 @@ int Dialog::getType(){
 void Dialog::on_pushButton_clicked()
 {
     type = 1;
-
     hide();
-
 }
 

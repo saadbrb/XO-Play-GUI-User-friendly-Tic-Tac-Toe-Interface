@@ -25,9 +25,6 @@ public:
     GraphikObjkt(const GraphikObjkt&);
     explicit GraphikObjkt(bool deko_ = false ): deko(deko_){}
 
-
-    // Verbieten den Kopierkonstruktor und den Zuweisungsoperator
-    // GraphObj(const GraphObj&) = delete;
     GraphikObjkt& operator=(const GraphikObjkt&) = delete;
     void setLastPunkt(QPointF p) {
         lastPunkt = p;

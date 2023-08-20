@@ -21,7 +21,7 @@ Paint::~Paint()
 
 void Paint::on_pushButton_clicked()
 {
-   canvas->neuSpiel();
+    canvas->neuSpiel();
 
 }
 
