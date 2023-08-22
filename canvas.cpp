@@ -18,6 +18,20 @@ Canvas::Canvas(QWidget *parent)
     dragging = false;
     laenge = this->height();
     breite = this->width();
+    arrayIntiale();
+
+}
+
+void Canvas::neuSpiel(){
+    arrayIntiale();
+    playScene.removeAllObjects();
+    playerCounter = 0;
+    gridMallen();
+    dragging = false;
+    update();
+}
+
+void Canvas::arrayIntiale(){
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
             playFeld[i][j] = ' ';
@@ -25,18 +39,6 @@ Canvas::Canvas(QWidget *parent)
     }
 }
 
-void Canvas::neuSpiel(){
-    for(int i=0; i<3; i++){
-        for(int j=0; j<3; j++){
-            playFeld[i][j] = ' ';
-        }
-    }
-    playScene.removeAllObjects();
-    playerCounter = 0;
-    gridMallen();
-    dragging = false;
-    update();
-}
 QSize Canvas::minimumSizeHint() const
 {
     return QSize(200,200);
@@ -66,44 +68,37 @@ void Canvas::ergebnisAnzeigen(char c)
     secdialog.setModal(true);
     secdialog.show();
     secdialog.exec();
-    qDebug()<<"type is = "<<secdialog.getType();
-    if(secdialog.getType() == 0){
-        exit(0);
-        qDebug()<<"type is = "<<secdialog.getType();
-
-    }
-    else if (secdialog.getType() == 1) {
-        neuSpiel();
-        qDebug()<<"type is = "<<secdialog.getType();
-
-    }
-    else {
-        return;
-    }
-
+    neuSpiel();
 }
 void Canvas::checkPlayIfFinish(){
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
             if(playFeld[i][0] == playFeld[i][1] && playFeld[i][1] == playFeld[i][2] && playFeld[i][2] != ' '){
+                playerCounter = 0;
                 ergebnisAnzeigen(playFeld[i][0]);
             }
             else if(playFeld[0][j] == playFeld[1][j] && playFeld[1][j] == playFeld[2][j] && playFeld[2][j] != ' '){
+
+                playerCounter = 0;
                 ergebnisAnzeigen(playFeld[1][j]);
             }
             else if(playFeld[0][0] == playFeld[1][1] && playFeld[1][1] == playFeld[2][2] && playFeld[2][2] != ' '){
+                playerCounter = 0;
                 ergebnisAnzeigen(playFeld[0][0]);
             }
             else if(playFeld[0][2] == playFeld[1][1] && playFeld[1][1] == playFeld[2][0] && playFeld[2][0] != ' '){
+                playerCounter = 0;
                 ergebnisAnzeigen(playFeld[2][0]);
             }
         }
     }
 }
-
 void Canvas::paintEvent(QPaintEvent *event) {
 
-    checkPlayIfFinish();
+    if(playerCounter > 2){
+        checkPlayIfFinish();
+    }
+
     QFrame::paintEvent(event);  // parent class draws border
     QPainter painter(this);
     painter.setPen(Qt::black);
@@ -123,6 +118,7 @@ void Canvas::paintEvent(QPaintEvent *event) {
                 malXIfPositionFound(firstPunkt);
                 playFeld[row][col] = 'x';
                 playerCounter++;
+
             }
         }
         else if(playerCounter % 2 != 0){
@@ -132,12 +128,14 @@ void Canvas::paintEvent(QPaintEvent *event) {
                 malOIfPositionFound(firstPunkt);
                 playFeld[row][col] = 'o';
                 playerCounter++;
+
             }
         }
     }
     gridScene.paintAllObjects(&painter);
     playScene.paintAllObjects(&painter);
     painter.end();
+
 }
 
 void Canvas::mousePressEvent(QMouseEvent *event) {

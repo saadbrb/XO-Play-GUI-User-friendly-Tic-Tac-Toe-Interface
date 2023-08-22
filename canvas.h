@@ -22,6 +22,7 @@ public:
     void checkPlayIfFinish();
     void ergebnisAnzeigen(char c);
     void neuSpiel();
+    void arrayIntiale();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
