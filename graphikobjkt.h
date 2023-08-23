@@ -35,6 +35,8 @@ public:
     QPointF getLastPunkt() const {
         return lastPunkt;
     }
+    void setFirstPunkt(double ratioX, double ratioY);
+    void setLastPunkt(double ratioX, double ratioY);
     qreal minF(qreal x, qreal y) const{
         return qMin(x, y);
     }

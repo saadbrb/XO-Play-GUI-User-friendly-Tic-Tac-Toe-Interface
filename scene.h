@@ -18,6 +18,7 @@ public:
     void paintAllObjects(QPainter* event);
     void removeAllObjects();
     QVector<GraphikObjkt*>& getGraphObjkts();
+    void setPointsAllObjekt(double ratioX, double ratioY);
     ~Scene(){
         if(graphikObjekten.size() > 0){
             for (GraphikObjkt* object : graphikObjekten) {

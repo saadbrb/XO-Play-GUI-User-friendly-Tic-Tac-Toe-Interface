@@ -25,6 +25,7 @@ public:
     void arrayIntiale();
     int getArraySize();
     void failedDisplay();
+    void repaintAllXAndO(int laenge_, int breite_);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;

@@ -84,8 +84,14 @@ void Canvas::ergebnisAnzeigen(char c)
     neuSpiel();
 }
 
-void Canvas::failedDisplay(){
+void Canvas::repaintAllXAndO(int laenge_, int breite_){
+    double ratioX, ratioY;
+    ratioX = ((double)this->width()) / breite_;
+    ratioY = ((double)this->height()) / laenge_;
+    playScene.setPointsAllObjekt(ratioX, ratioY);
+}
 
+void Canvas::failedDisplay(){
     FailedDialog failedDialog;
     failedDialog.setModal(true);
     failedDialog.show();
@@ -140,7 +146,9 @@ void Canvas::paintEvent(QPaintEvent *event) {
     painter.fillRect(QRectF(0,0, width() -1, height() -1), Qt::white);
     painter.drawRect(QRectF(0,0, width() -1, height() -1));
     if( laenge != this->height() || breite != this->width()){
+        repaintAllXAndO(laenge, breite);
         gridMallen();
+
         laenge = this->height();
         breite = this->width();
     }
@@ -230,7 +238,6 @@ void Canvas::malOIfPositionFound(QPointF p){
     float cellSizeX = width() / 3;
     float cellSizeY = height() / 3;
     float col = std::min(int(p.x() / cellSizeX), 3 - 1);
-
     float row = std::min(int(p.y() / cellSizeY), 3 - 1);
 
     QPointF firstPunkt;
@@ -241,10 +248,9 @@ void Canvas::malOIfPositionFound(QPointF p){
     firstPunkt.rx() = xPosition;
     firstPunkt.ry() = yPosition;
     QPointF lastPunkt;
-    lastPunkt.rx() = firstPunkt.x() + 67;
-    lastPunkt.ry() = firstPunkt.y() + 67;
+    lastPunkt.rx() = firstPunkt.x() + this->width()/19;
+    lastPunkt.ry() = firstPunkt.y() + this->width()/19;
     playScene.addObjkt(new Circle(firstPunkt, lastPunkt, Qt::red, 7));
-
 }
 
 void Canvas::malXIfPositionFound(QPointF p){
@@ -255,9 +261,13 @@ void Canvas::malXIfPositionFound(QPointF p){
     QPointF firstPunkt;
     firstPunkt.rx() = (col*this->width())/3;
     firstPunkt.ry() = (row*this->height())/3;
+    firstPunkt.rx() = firstPunkt.x() +10;
+    firstPunkt.ry() = firstPunkt.y() +10;
     QPointF lastPunkt;
     lastPunkt.rx() = ((col+1)*this->width())/3;
     lastPunkt.ry() = ((row+1)*this->height())/3;
+    lastPunkt.rx() = lastPunkt.x() -10;
+    lastPunkt.ry() = lastPunkt.y() -10;
     playScene.addObjkt((new Line(firstPunkt, lastPunkt,Qt::blue, 7)));
 
     firstPunkt.rx() = ((col+1)*this->width())/3;
@@ -265,6 +275,10 @@ void Canvas::malXIfPositionFound(QPointF p){
 
     lastPunkt.rx() = (col*this->width())/3;
     lastPunkt.ry() = ((row+1)*this->height())/3;
+    firstPunkt.rx() = firstPunkt.x()-10;
+    firstPunkt.ry() = firstPunkt.y()+10;
+    lastPunkt.rx() = lastPunkt.x() +10;
+    lastPunkt.ry() = lastPunkt.y() -10;
     playScene.addObjkt((new Line(firstPunkt, lastPunkt,Qt::blue, 7)));
 
 }
