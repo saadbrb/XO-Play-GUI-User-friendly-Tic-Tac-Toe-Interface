@@ -7,10 +7,12 @@
 #include <QDialog>
 #include <QAction>
 
+
 #include "canvas.h"
 #include "line.h"
 #include "circle.h"
 #include "dialog.h"
+#include "faileddialog.h"
 
 Canvas::Canvas(QWidget *parent)
     : QFrame(parent)
@@ -49,6 +51,17 @@ QSize Canvas::sizeHint() const
     return QSize(640,480);
 }
 
+int Canvas::getArraySize(){
+    int counter = 0;
+    for(int i=0; i<3; i++){
+        for(int j=0; j<3; j++){
+            if(playFeld[i][j] != ' '){
+                counter++;
+            }
+        }
+    }
+    return counter;
+}
 
 void Canvas::ergebnisAnzeigen(char c)
 {
@@ -70,34 +83,56 @@ void Canvas::ergebnisAnzeigen(char c)
     secdialog.exec();
     neuSpiel();
 }
+
+void Canvas::failedDisplay(){
+
+    FailedDialog failedDialog;
+    failedDialog.setModal(true);
+    failedDialog.show();
+    failedDialog.exec();
+    neuSpiel();
+}
 void Canvas::checkPlayIfFinish(){
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
             if(playFeld[i][0] == playFeld[i][1] && playFeld[i][1] == playFeld[i][2] && playFeld[i][2] != ' '){
                 playerCounter = 0;
                 ergebnisAnzeigen(playFeld[i][0]);
+                return;
             }
-            else if(playFeld[0][j] == playFeld[1][j] && playFeld[1][j] == playFeld[2][j] && playFeld[2][j] != ' '){
+            if(playFeld[0][j] == playFeld[1][j] && playFeld[1][j] == playFeld[2][j] && playFeld[2][j] != ' '){
 
                 playerCounter = 0;
                 ergebnisAnzeigen(playFeld[1][j]);
+                return;
             }
-            else if(playFeld[0][0] == playFeld[1][1] && playFeld[1][1] == playFeld[2][2] && playFeld[2][2] != ' '){
+            if(playFeld[0][0] == playFeld[1][1] && playFeld[1][1] == playFeld[2][2] && playFeld[2][2] != ' '){
                 playerCounter = 0;
                 ergebnisAnzeigen(playFeld[0][0]);
+                return;
             }
-            else if(playFeld[0][2] == playFeld[1][1] && playFeld[1][1] == playFeld[2][0] && playFeld[2][0] != ' '){
+            if(playFeld[0][2] == playFeld[1][1] && playFeld[1][1] == playFeld[2][0] && playFeld[2][0] != ' '){
                 playerCounter = 0;
                 ergebnisAnzeigen(playFeld[2][0]);
+                return;
             }
         }
     }
+    if(getArraySize() == 9 && playerCounter>0){
+        qDebug()<<"Size is_ = "<<getArraySize()<<"\n";
+        playerCounter = 0;
+        failedDisplay();
+        return;
+    }
+
 }
 void Canvas::paintEvent(QPaintEvent *event) {
 
     if(playerCounter > 2){
         checkPlayIfFinish();
     }
+
+
 
     QFrame::paintEvent(event);  // parent class draws border
     QPainter painter(this);
@@ -139,7 +174,6 @@ void Canvas::paintEvent(QPaintEvent *event) {
 }
 
 void Canvas::mousePressEvent(QMouseEvent *event) {
-
     if (event->button() == Qt::LeftButton) {
         dragging = true;
         firstPunkt = event->pos();
@@ -156,7 +190,6 @@ void Canvas::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event) {
-
     if (event->button() == Qt::LeftButton && dragging) {
         lastPunkt = event->pos();
         dragging = false;

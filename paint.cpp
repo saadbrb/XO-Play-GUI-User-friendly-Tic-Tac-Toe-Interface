@@ -21,7 +21,12 @@ Paint::~Paint()
 
 void Paint::on_pushButton_clicked()
 {
-    canvas->neuSpiel();
+    QCoreApplication::quit();
+}
 
+
+void Paint::on_pushButton_2_clicked()
+{
+     canvas->neuSpiel();
 }
 

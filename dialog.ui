@@ -53,7 +53,8 @@
        <widget class="QPushButton" name="pushButton_2">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 0, 0);
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+</string>
         </property>
         <property name="text">
          <string>Programme Beenden</string>

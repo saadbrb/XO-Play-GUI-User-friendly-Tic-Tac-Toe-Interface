@@ -77,27 +77,25 @@
          </item>
          <item>
           <widget class="QPushButton" name="pushButton">
-           <property name="maximumSize">
-            <size>
-             <width>865</width>
-             <height>25</height>
-            </size>
-           </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(246, 97, 81);
+            <string notr="true">background-color: rgb(255, 0, 0);
+color: rgb(0, 0, 0);
+
+</string>
+           </property>
+           <property name="text">
+            <string>Beenden</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(51, 209, 122);
 color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>Replay</string>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>9</width>
-             <height>8</height>
-            </size>
-           </property>
-           <property name="autoRepeatDelay">
-            <number>296</number>
            </property>
           </widget>
          </item>

@@ -12,6 +12,7 @@ SOURCES += \
     canvas.cpp \
     circle.cpp \
     dialog.cpp \
+    faileddialog.cpp \
     graphikobjkt.cpp \
     line.cpp \
     main.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     canvas.h \
     circle.h \
     dialog.h \
+    faileddialog.h \
     graphikobjkt.h \
     line.h \
     paint.h \
@@ -29,6 +31,7 @@ HEADERS += \
 
 FORMS += \
     dialog.ui \
+    faileddialog.ui \
     paint.ui
 
 # Default rules for deployment.

@@ -23,6 +23,8 @@ public:
     void ergebnisAnzeigen(char c);
     void neuSpiel();
     void arrayIntiale();
+    int getArraySize();
+    void failedDisplay();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
